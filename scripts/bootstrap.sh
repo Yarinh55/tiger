@@ -15,8 +15,6 @@ CREATE DATABASE tiger;
 USE tiger;
 CREATE TABLE users(username VARCHAR(20), password VARCHAR(100) NOT NULL, create_date TIMESTAMP NOT NULL, PRIMARY KEY(username));
 CREATE TABLE messages(username VARCHAR(20),create_date TIMESTAMP NOT NULL,content VARCHAR(100) NOT NULL,FOREIGN KEY(username) REFERENCES users(username));
-INSERT INTO tiger.users (username,password) VALUES('DummyName','RandomPass123545');"
-"INSERT INTO tiger.messages (username,create_date,content) VALUES ('DummyName','2020-01-01 10:10:10','This is my first message,Hello world');"
 
 MYSQL_SCRIPT
 
