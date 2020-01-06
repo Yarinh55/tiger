@@ -29,8 +29,8 @@ def messages_view():
     VALUES('YarinAndMor','RandomPass123545','2020-01-01 10:09:10')"""
     cursor.execute(mySql_insert_query)
     connection.commit()
-    mySql_insert_query2 = """INSERT INTO tiger.messages ((username,create_date,content)
-    VALUES('YarinAndMor','2020-01-01 10:10:10',
+    mySql_insert_query2 = """INSERT INTO tiger.messages (username,create_date,content)
+    VALUES ('YarinAndMor','2020-01-01 10:10:10',
     'This is my first message,Hello world')"""
     cursor.execute(mySql_insert_query2)
     connection.commit()
