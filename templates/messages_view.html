@@ -23,7 +23,12 @@
         {% block content %}
 
         <h1>View Messages</h1>
-
+		<section >
+			<form action="tiger/app.py" method="">          
+			<input type="search" placeholder="Click a word to search">               
+			<button onclick="search_messages()">Search</button>
+			</form>
+		</section>
 
                {% for row in view %}
         <div class="wholeMessage">
