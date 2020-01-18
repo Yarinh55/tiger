@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, session
 import logging
 from mysql import connector
 
 app = Flask(__name__)
+
+app.config["SECRET_KEY"] = "OCML3BRawWEUeaxcuKHLpw"
 
 
 def definedlog(fileHandler):
@@ -12,7 +14,7 @@ def definedlog(fileHandler):
     handler = logging.FileHandler(fileHandler)
     handler.setLevel(logging.ERROR)
     formatter = logging.Formatter(
-            '%(asctime)s - %(name)s - %(levelname)s : %(message)s')
+        '%(asctime)s - %(name)s - %(levelname)s : %(message)s')
     handler.setFormatter(formatter)
     logger.addHandler(handler)
     return logger
@@ -45,19 +47,44 @@ def messages_view():
     return render_template('/messages_view.html', view=view)
 
 
+def search_messages(conn):
+    filter = conn.cursor()
+    word = input()
+    filter.execute("SELECT * FROM tiger.messages WHERE content LIKE % s" +
+                   "ORDER BY create_date DESC", (" % {} % ".format(word),))
+    filtering = filter.fetchall()
+    return filtering
+
+
 @app.route('/log_in', methods=['GET', 'POST'])
-# TODO write logic to this function
 def log_in():
-    if request.method == 'POST':
-        return render_template('home.html')
+    if request.method == "POST":
+        req = request.form
+        email = req.get("email")
+        password = req.get("password")
+        session["EMAIL"] = email
+        session["PASSWORD"] = password
+        return render_template('Home.html', email=session["EMAIL"])
     return render_template('/sign_up.html')
 
 
 @app.route('/log_out')
-# TODO after seesion will be merge write this function
 def log_out():
     return render_template('home.html')
 
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0')
+
+
+def check_username(username):
+    maulers = conn.cursor()
+    Fender = "SELECT * FROM users WHERE username  =" + username
+    maulers.execute(Fender)
+    result = maulers.fetchall()
+    if not result:
+        # the user doesnt exist
+        return False
+    else:
+        # the user exists
+        return True
